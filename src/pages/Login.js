@@ -48,6 +48,7 @@ const Login = () => {
   return (
     <div className="homePageWrapper">
       <div className="formWrapper">
+        <img className="homePageLogo" src="/codev_final.png" alt="codev-logo" />
         <h2 className="mainLabel">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="inputGroup">
@@ -62,10 +63,11 @@ const Login = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="inputGroup">
             <label htmlFor="password">Password</label>
             <input
               type="password"
+              className="inputBox"
               id="password"
               name="password"
               value={formData.password}
@@ -73,10 +75,15 @@ const Login = () => {
               required
             />
           </div>
-          <button type="submit">Login</button>
+          <button className="btn joinBtn" type="submit">
+            Login
+          </button>
         </form>
         <p>
-          Don't have an account? Please <Link to="/signup">Register</Link>
+          Don't have an account? Please{" "}
+          <Link className="createNewBtn" to="/signup">
+            Register
+          </Link>
         </p>
       </div>
     </div>

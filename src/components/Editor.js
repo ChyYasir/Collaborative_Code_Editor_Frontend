@@ -91,10 +91,10 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
   //   console.log(editorRef.current.getTextArea());
   return (
     <>
-      <button onClick={saveCode} className="saveButton">
+      <button onClick={saveCode} className="btn joinBtn margin">
         Save Code
       </button>
-      <textarea id="realtimeEditor"></textarea>;
+      <textarea id="realtimeEditor"></textarea>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -51,55 +51,70 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
+    <div className="homePageWrapper">
+      <div className="formWrapper">
+        <img className="homePageLogo" src="/codev_final.png" alt="codev-logo" />
+        <h2 className="mainLabel">Sign Up</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="inputGroup">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              className="inputBox"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="inputGroup">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              className="inputBox"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="inputGroup">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              className="inputBox"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="inputGroup">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              className="inputBox"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <button className="btn joinBtn" type="submit">
+            Sign Up
+          </button>
+        </form>
+        <p>
+          Already have an account?{" "}
+          <Link className="createNewBtn" to="/login">
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

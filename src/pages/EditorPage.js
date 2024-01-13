@@ -124,18 +124,25 @@ const EditorPage = () => {
 
   return (
     <div className="mainWrap">
-      <div className="aside">
+      <div className="aside2">
         <div className="asideInner">
           <div className="logo">
-            <img className="logoImage" src="/code-sync.png" alt="logo" />
+            <img
+              className="logoImage"
+              src="../../public/code-sync.png"
+              alt="logo"
+            />
           </div>
           <h3>{roomName || "Unnamed Room"}</h3>
-          <input
-            type="text"
-            value={newRoomName}
-            onChange={(e) => setNewRoomName(e.target.value)}
-            placeholder="Enter new room name"
-          />
+          <div className="inputGoup">
+            <input
+              type="text"
+              className="inputBox custom"
+              value={newRoomName}
+              onChange={(e) => setNewRoomName(e.target.value)}
+              placeholder="Enter new room name"
+            />
+          </div>
           <button className="btn leaveBtn" onClick={updateRoomName}>
             Update
           </button>
