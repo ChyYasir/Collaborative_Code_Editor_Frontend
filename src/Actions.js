@@ -7,5 +7,6 @@ const ACTIONS = {
   LEAVE: "leave",
   SEND_MESSAGE: "send_message",
   RECEIVE_MESSAGE: "receive_message",
+  TYPING: "typing",
 };
 export default ACTIONS;

@@ -9,8 +9,9 @@ import ACTIONS from "../Actions";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const Editor = ({ socketRef, roomId, onCodeChange }) => {
+const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
   const editorRef = useRef(null);
+
   useEffect(() => {
     async function init() {
       editorRef.current = Codemirror.fromTextArea(
@@ -29,15 +30,15 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
         const code = instance.getValue();
         onCodeChange(code);
         if (origin !== "setValue") {
-          socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-            roomId,
-            code,
-          });
+          socketRef.current.emit(ACTIONS.CODE_CHANGE, { roomId, code });
+          // Emit typing event
+          socketRef.current.emit(ACTIONS.TYPING, { roomId, username });
         }
       });
     }
     init();
   }, []);
+
   useEffect(() => {
     const fetchCode = async () => {
       try {
@@ -88,7 +89,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
       }
     }
   };
-  //   console.log(editorRef.current.getTextArea());
+
   return (
     <>
       <button onClick={saveCode} className="btn joinBtn margin">

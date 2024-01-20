@@ -22,8 +22,10 @@ const EditorPage = () => {
   const [clients, setClients] = useState([]);
   const [roomName, setRoomName] = useState("");
   const [newRoomName, setNewRoomName] = useState("");
-
   const username = location.state?.username;
+
+  let typingToastId = null;
+
   useEffect(() => {
     const init = async () => {
       socketRef.current = await initSocket();
@@ -41,7 +43,6 @@ const EditorPage = () => {
         username: location.state?.username,
       });
 
-      // Listening for joined event
       socketRef.current.on(
         ACTIONS.JOINED,
         ({ clients, username, socketId }) => {
@@ -57,19 +58,28 @@ const EditorPage = () => {
         }
       );
 
-      // Listening for disconnected
       socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, username }) => {
         toast.success(`${username} left the room.`);
-        setClients((prev) => {
-          return prev.filter((client) => client.socketId !== socketId);
+        setClients((prev) =>
+          prev.filter((client) => client.socketId !== socketId)
+        );
+      });
+
+      socketRef.current.on(ACTIONS.TYPING, ({ username }) => {
+        if (typingToastId) {
+          toast.dismiss(typingToastId);
+        }
+        typingToastId = toast(`${username} is updating the code...`, {
+          duration: 3000,
         });
       });
+
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/room/get-code/${roomId}`
         );
         const { code, roomName } = response.data;
-        setRoomName(roomName); // Set the fetched room name
+        setRoomName(roomName);
       } catch (error) {
         console.error("Failed to fetch room details:", error);
         toast.error("Failed to fetch room details");
@@ -80,6 +90,10 @@ const EditorPage = () => {
       socketRef.current.disconnect();
       socketRef.current.off(ACTIONS.JOINED);
       socketRef.current.off(ACTIONS.DISCONNECTED);
+      socketRef.current.off(ACTIONS.TYPING);
+      if (typingToastId) {
+        toast.dismiss(typingToastId);
+      }
     };
   }, []);
 
@@ -102,11 +116,7 @@ const EditorPage = () => {
     try {
       await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/room/save-code`,
-        {
-          roomId,
-          roomName: newRoomName,
-          code: codeRef.current, // Send the current code along with the new name
-        }
+        { roomId, roomName: newRoomName, code: codeRef.current }
       );
       setRoomName(newRoomName);
       toast.success("Room name updated successfully");
@@ -170,6 +180,7 @@ const EditorPage = () => {
           onCodeChange={(code) => {
             codeRef.current = code;
           }}
+          username={username}
         />
       </div>
     </div>
