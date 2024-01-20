@@ -11,6 +11,7 @@ import {
   useParams,
 } from "react-router-dom";
 import axios from "axios";
+import Chat from "../components/Chat";
 
 const EditorPage = () => {
   const socketRef = useRef(null);
@@ -22,6 +23,7 @@ const EditorPage = () => {
   const [roomName, setRoomName] = useState("");
   const [newRoomName, setNewRoomName] = useState("");
 
+  const username = location.state?.username;
   useEffect(() => {
     const init = async () => {
       socketRef.current = await initSocket();
@@ -152,6 +154,7 @@ const EditorPage = () => {
               <Client key={client.socketId} username={client.username} />
             ))}
           </div>
+          <Chat socketRef={socketRef} roomId={roomId} username={username} />
         </div>
         <button className="btn copyBtn" onClick={copyRoomId}>
           Copy ROOM ID

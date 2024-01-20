@@ -139,6 +139,7 @@ footer a:hover {
   color: #fff;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .asideInner {
   flex: 1;
@@ -180,4 +181,21 @@ footer a:hover {
   font-size: 20px;
   line-height: 1.6;
   padding-top: 20px;
+}
+.chat-container {
+  flex-grow: 1; /* Allow chat container to take up remaining space */
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  overflow-y: auto; /* Enable scrolling */
+  flex-grow: 1; /* Allow message area to expand */
+  max-height: calc(
+    100vh - 250px
+  ); /* Adjust the value based on your header/footer height */
+}
+
+.chat-input {
+  /* Style as needed */
 }
